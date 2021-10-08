@@ -10,7 +10,8 @@ import (
 type Camera struct {
 	win *pixelgl.Window
 	Position pixel.Vec
-	Zoom float64
+	ZoomValue float64
+	ZoomSpeed float64
 	mat pixel.Matrix
 }
 
@@ -18,7 +19,8 @@ func NewCamera(win *pixelgl.Window, x, y float64) *Camera {
 	return &Camera{
 		win: win,
 		Position: pixel.V(x, y),
-		Zoom: 1.0,
+		ZoomValue: 1.0,
+		ZoomSpeed: 0.1,
 		mat: pixel.IM,
 	}
 }
@@ -31,9 +33,13 @@ func (c *Camera) Update() {
 		math.Floor(-c.Position.Y),
 	).Add(screenCenter)
 
-	c.mat = pixel.IM.Moved(movePos).Scaled(screenCenter, c.Zoom)
+	c.mat = pixel.IM.Moved(movePos).Scaled(screenCenter, c.ZoomValue)
 }
 
 func (c *Camera) Mat() pixel.Matrix {
 	return c.mat
+}
+
+func (c *Camera) Zoom(z float64) {
+	c.ZoomValue += z * c.ZoomSpeed
 }
