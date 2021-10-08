@@ -42,3 +42,7 @@ func (c *Controller) InputHandler() {
 
 	c.MoveObject(vec)
 }
+
+func (c *Controller) Object() *GameObject {
+	return c.obj
+}

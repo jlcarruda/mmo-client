@@ -65,3 +65,7 @@ func (obj *GameObject) Move(mVector Vector, speed float64) pixel.Vec {
 	obj.position.Y += mVector.Y * speed
 	return obj.position
 }
+
+func (obj *GameObject) Position() pixel.Vec {
+	return obj.position
+}

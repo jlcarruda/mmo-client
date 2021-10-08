@@ -11,6 +11,7 @@ import (
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/jlcarruda/mmo-client/engine"
 	"github.com/jlcarruda/mmo-client/engine/asset"
+	"github.com/jlcarruda/mmo-client/engine/render"
 )
 
 func main() {
@@ -42,14 +43,21 @@ func runGame() {
 	controller := engine.NewController()
 	engine.NewCharacter(charSprite, charPos, 2.0, win, controller)
 
+	camera := render.NewCamera(win, 0, 0)
+
 	for !win.JustPressed(pixelgl.KeyEscape) {
 		win.Clear(pixel.RGB(0, 0, 0))
 
 		controller.InputHandler()
 		
+		camera.Position = controller.Object().Position()
+		camera.Update()
+		
+		win.SetMatrix(camera.Mat())
 		for _, obj := range engine.GameObjectMap {
 			obj.DrawSelf()
 		}
+		win.SetMatrix(pixel.IM)
 
 		win.Update()
 	}
