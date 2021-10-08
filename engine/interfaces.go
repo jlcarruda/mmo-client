@@ -9,7 +9,7 @@ type DrawableObject interface {
 type InputHandler interface {
 	MoveObject(vec Vector)
 	SetObject(obj *GameObject)
-	MovementListener()
+	InputHandler()
 }
 
 type Vector struct {

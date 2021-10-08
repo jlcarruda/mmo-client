@@ -45,7 +45,7 @@ func runGame() {
 	for !win.JustPressed(pixelgl.KeyEscape) {
 		win.Clear(pixel.RGB(0, 0, 0))
 
-		controller.MovementListener()
+		controller.InputHandler()
 		
 		for _, obj := range engine.GameObjectMap {
 			obj.DrawSelf()

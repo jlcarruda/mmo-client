@@ -24,7 +24,7 @@ func (c *Controller) MoveObject(vec Vector) {
 	c.obj.Move(vec, MOVE_SPEED)
 }
 
-func (c *Controller) MovementListener() {
+func (c *Controller) InputHandler() {
 	vec := Vector{0,0}
 
 	if c.win.Pressed(pixelgl.KeyLeft) {
