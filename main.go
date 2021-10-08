@@ -9,8 +9,8 @@ import (
 
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
-	"github.com/jlcarruda/mmo/engine"
-	"github.com/jlcarruda/mmo/engine/asset"
+	"github.com/jlcarruda/mmo-client/engine"
+	"github.com/jlcarruda/mmo-client/engine/asset"
 )
 
 func main() {
