@@ -17,16 +17,18 @@ type TileMatrix [][]Tile
 type Tilemap struct {
 	TileSize int
 	Tiles TileMatrix
+	Batch *pixel.Batch
 }
 
-func New(tiles TileMatrix, tileSize int) *Tilemap {
+func New(tiles TileMatrix, Batch *pixel.Batch, tileSize int) *Tilemap {
 	return &Tilemap{
+		Batch: Batch,
 		TileSize: tileSize,
 		Tiles: tiles,
 	}
 }
 
-func (t *Tilemap) DrawSelf(win *pixelgl.Window) {
+func (t *Tilemap) Rebatch() {
 	for x := range t.Tiles {
 		for y, tile := range t.Tiles[x] {
 			pos := pixel.V(
@@ -35,7 +37,11 @@ func (t *Tilemap) DrawSelf(win *pixelgl.Window) {
 			)
 
 			mat := pixel.IM.Moved(pos)
-			tile.Sprite.Draw(win, mat)
+			tile.Sprite.Draw(t.Batch, mat)
 		}
 	}
+}
+
+func (t *Tilemap) DrawSelf(win *pixelgl.Window) {
+	t.Batch.Draw(win)
 }
