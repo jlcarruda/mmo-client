@@ -40,16 +40,18 @@ func runGame() {
 	charPos := win.Bounds().Center()
 	
 	controller := engine.NewController()
-	engine.NewCharacter(charSprite, charPos, 2.0, win, controller)
+	engine.NewCharacter(charSprite, charPos, 1.0, win, controller)
 
 	for !win.JustPressed(pixelgl.KeyEscape) {
 		win.Clear(pixel.RGB(0, 0, 0))
 
 		controller.InputHandler()
 		
+		win.SetMatrix(controller.Camera().Mat())
 		for _, obj := range engine.GameObjectMap {
 			obj.DrawSelf()
 		}
+		win.SetMatrix(pixel.IM)
 
 		win.Update()
 	}
