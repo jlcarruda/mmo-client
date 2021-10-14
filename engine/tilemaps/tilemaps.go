@@ -1,4 +1,4 @@
-package tilemap
+package tilemaps
 
 import (
 	"github.com/faiface/pixel"
