@@ -6,6 +6,7 @@ import (
 	_ "image/png"
 	"io/fs"
 	"io/ioutil"
+	"os"
 
 	"github.com/faiface/pixel"
 	"github.com/jstewart7/packer"
@@ -13,10 +14,15 @@ import (
 
 type Load struct {
 	filesystem fs.FS
+	imagesPath string
 }
 
-func NewLoad(filesystem fs.FS) *Load {
-	return &Load{filesystem}
+func NewLoad() *Load {
+	filesystem := os.DirFS(".")
+	return &Load{
+		filesystem: filesystem,
+		imagesPath: "/images",
+	}
 }
 
 func (load *Load) Open(path string) (fs.File, error) {
@@ -87,7 +93,7 @@ func (load *Load) Spritesheet(path string) (*SpriteSheet, error) {
 		rect := pixel.R(
 			v.Frame.X,
 			bounds.H() - v.Frame.Y,
-			v.Frame.X - v.Frame.W,
+			v.Frame.X + v.Frame.W,
 			bounds.H() - (v.Frame.Y + v.Frame.H),
 		).Norm()
 
