@@ -16,6 +16,12 @@ func main() {
 	pixelgl.Run(runGame)
 }
 
+func check(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
+
 func runGame() {
 	mapSize := 100
 	tileSize := 16
@@ -28,20 +34,14 @@ func runGame() {
 	}
 
 	win, err := pixelgl.NewWindow(cfg)
-	if err != nil {
-		panic(err)
-	}
+	check(err)
 	win.SetSmooth(false)
 
 	load := asset.NewLoad()
 	spritesheet, err := load.Spritesheet("packed.json")
-	if err != nil {
-		panic(err)
-	}
+	check(err)
 	charSprite, err := spritesheet.Get("char.png")
-	if err != nil {
-		panic(err)
-	}
+	check(err)
 	
 	charPos := win.Bounds().Center()
 	
@@ -50,9 +50,7 @@ func runGame() {
 
 	tiles := make(tilemap.TileMatrix, mapSize)
 	grassSprite, err := spritesheet.Get("grass.png")
-	if err != nil {
-		panic(err)
-	}
+	check(err)
 	
 	for x := range tiles {
 		tiles[x] = make([]tilemap.Tile, mapSize)
@@ -72,7 +70,6 @@ func runGame() {
 		win.Clear(pixel.RGB(0, 0, 0))
 
 		controller.InputHandler()
-		
 		
 		win.SetMatrix(controller.Camera().Mat())
 		tmap.DrawSelf(win)
